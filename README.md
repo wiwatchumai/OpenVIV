@@ -1,8 +1,10 @@
-# 📊 static_axial-loading_beam
+# ACB (AXIAL COMPRESSING BEAM): Open-Source Tool 
 
-Based on the concept of the **Finite Element Method (FEM)**, this code allows users to freely control relevant variables for beam calculations. The program analyzes the **axial compression** of a beam under **static loading conditions**.
+An open-source tool developed for beam axial compressions. 
 
-![Beam Diagram](images/IMAGE1.png)
+Based on the concept of the **Finite Element Method (FEM)**, this code allows users to freely control relevant variables for beam calculations. The program analyzes the **axial compression** of a beam under **static loading conditions**. 
+
+(images/IMAGE1.png)
 
 > _Place your image inside an `images/` folder or update the path as needed._
 
