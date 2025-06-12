@@ -6,13 +6,12 @@ Based on the concept of the **Finite Element Method (FEM)**, this code allows us
 
 ![Figure 1](images/IMAGE1.png)
 
-> _Place your image inside an `images/` folder or update the path as needed._
-
 ## 📁 Features
 
 - Finite Element Method (FEM) implementation for axial loading
 - User control of beam parameters (length, area, density, stiffness, force)
-- Visualization 
+- Visualization
+- Enhance field workers
 
 ## 🧑‍💻 Author & Contact
 
@@ -20,5 +19,5 @@ Developed by **Wiwat Chumai**,
 Department of Mechanical and Aerospace Engineering,  
 Kyushu University, Japan.
 
-- 🌐 [My Website](https://v0-new-project-znvvxbesxef.vercel.app/)
+- 🌐 [Author Personal Website](https://v0-new-project-znvvxbesxef.vercel.app/)
 - 📧 Email: [wiwatchumai@gmail.com](mailto:wiwatchumai@gmail.com)
