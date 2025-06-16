@@ -27,8 +27,11 @@ BC3 = sp.Eq(u(x, 0).diff(t, 1), 0)  # Boundary condition at t=0
 i = int(input("Select the number of nodes : "))
 
 forces = []
-for n in range(1, i+1):
-    F_n = float(input(f"Input force magnitude at node {n}: "))
+for n in range(i):
+    if n == i - 1:
+        F_n = float(input(f"Input force magnitude at node {n+1}: "))
+    else:
+        F_n = 0.0
     forces.append(F_n)
 
 for n in range(1, i+1):

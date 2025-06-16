@@ -5,6 +5,10 @@ import sympy as sp
 # Damped system are required to calculate for the frequency response
 # This script calculates the frequency response of a damped system
 
+# 1. Free Vibration (Undamped/ Damped)
+# 2. Forced Vibration (Undamped/ Damped)
+
+
 # Define symbols
 x = sp.symbols('x')
 y = sp.Function('y')
