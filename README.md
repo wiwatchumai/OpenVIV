@@ -21,3 +21,4 @@ Kyushu University, Japan.
 
 - 🌐 [Author Personal Website](https://v0-new-project-znvvxbesxef.vercel.app/)
 - 📧 Email: [wiwatchumai@gmail.com](mailto:wiwatchumai@gmail.com)
+- 🏛️ Institution Details: [Kyushu University International Engineering Program](https://www.eng.kyushu-u.ac.jp/e/u_international_mechanical.html)
