@@ -4,19 +4,75 @@ import matplotlib.pyplot as plt
 
 st.title("OpenBeam: Axial Load Calculator")
 
+st.write("This work employs the idea of finite element analysis (FEA) to solve the axial load problem of a beam. The beam is divided into nodes, and the stiffness matrix is constructed based on the cross-sectional area and material properties. The nodal displacements are then computed based on the applied forces.")
+
 E = st.number_input("Young's Modulus (E) [Pa]", value=200e6)
-rho = st.number_input("Density (rho) [kg/m³]", value=7800.0)
-A = st.number_input("Cross-sectional Area (A) [m²]", value=0.005)
+rho = st.number_input("Density (ρ) [kg/m³]", value=7800.0)
 l = st.number_input("Beam Length (l) [m]", value=1.0)
 i = st.number_input("Number of Nodes", value=4, min_value=2, step=1)
+
+# Identify the beam's cross-sectional area shape
+st.write("Five common cross-sectional shapes include:")
+st.write("1. Rectangular Beam (R)")
+st.write("2. Circular Beam (CI)")
+st.write("3. Hollow-Circular (HC)")
+st.write("4. I-Beam (I)")
+st.write("5. T-Beam (T)")
+st.write("6. C-Beam (C)")
+st.write("7. Square Beam (S)")
+st.write("Each cross-sectional shape will lead to a different calculation results.")
+
+cross_section_shape = st.selectbox(
+    "Select the cross-sectional shape:",
+    ("Rectangular Beam (R)", "Circular Beam (CI)", "Hollow-Circular Beam (HC)", "I-Beam (I)", "T-Beam (T)", "C-Beam (C)", "Square Beam (S)")
+)
+
+A = 0
+if cross_section_shape.startswith("Rectangular"):
+    width = st.number_input("Width (m)", value=0.1)
+    height = st.number_input("Height (m)", value=0.1)
+    A = width * height
+elif cross_section_shape.startswith("Circular"):
+    radius = st.number_input("Radius (m)", value=0.05)
+    A = np.pi * radius**2
+elif cross_section_shape.startswith("Hollow-Circular"):
+    outer_radius = st.number_input("Outer Radius (m)", value=0.06)
+    inner_radius = st.number_input("Inner Radius (m)", value=0.04)
+    if inner_radius >= outer_radius:
+        st.error("Inner radius must be less than outer radius.")
+    else:
+        A = np.pi * (outer_radius**2 - inner_radius**2)
+elif cross_section_shape.startswith("I-Beam"):
+    width = st.number_input("Width (m)", value=0.1)
+    height = st.number_input("Height (m)", value=0.2)
+    flange_thickness = st.number_input("Flange Thickness (m)", value=0.02)
+    web_thickness = st.number_input("Web Thickness (m)", value=0.01)
+    A = (width * flange_thickness * 2) + (height - 2 * flange_thickness) * web_thickness
+elif cross_section_shape.startswith("T-Beam"):
+    width = st.number_input("Width (m)", value=0.1)
+    height = st.number_input("Height (m)", value=0.15)
+    flange_thickness = st.number_input("Flange Thickness (m)", value=0.02)
+    web_thickness = st.number_input("Web Thickness (m)", value=0.01)
+    A = (width * flange_thickness) + ((height - flange_thickness) * web_thickness)
+elif cross_section_shape.startswith("C-Beam"):
+    width = st.number_input("Width (m)", value=0.1)
+    height = st.number_input("Height (m)", value=0.15)
+    flange_thickness = st.number_input("Flange Thickness (m)", value=0.02)
+    web_thickness = st.number_input("Web Thickness (m)", value=0.01)
+    A = (width * flange_thickness * 2) + (height - 2 * flange_thickness) * web_thickness
+elif cross_section_shape.startswith("Square"):
+    side_length = st.number_input("Side Length (m)", value=0.1)
+    A = side_length**2
+else:
+    st.warning("Invalid cross-sectional shape selected.")
 
 k = E * A / l
 
 forces = []
-st.subheader("Forces")
+st.subheader("Compressive Force")
 for n in range(int(i)):
     if n == i - 1:
-        F_n = st.number_input(f"Force at Node {n+1}", value=100.0)
+        F_n = st.number_input(f"Force at Node {n+1} (N)", value=100.0)
     else:
         F_n = 0.0
     forces.append(F_n)
@@ -35,10 +91,9 @@ if st.button("Compute"):
     F[0] = 0
 
     u = np.linalg.solve(K, F)
-    u = np.linalg.solve(K, F)
     st.write("### Nodal Displacements:")
 
-    displacement_str = "      ".join([f"u{n} = {u[n]:.6f} m , " for n in range(int(i))])
+    displacement_str = "    ".join([f"u{n} = {u[n]:.6f} m , " for n in range(int(i))])
     st.write(displacement_str)
 
     fig, ax = plt.subplots()
@@ -48,6 +103,10 @@ if st.button("Compute"):
     ax.set_ylabel("Displacement (m)")
     ax.grid(True)
     st.pyplot(fig)
+
+st.write("If you have any questions or need further assistance, please feel free to ask!")
+st.write("email: wiwatchumai@gmail.com")
+st.write("instagram: @feuzzy_field")
 
 
     # Run the program: streamlit run app.py
