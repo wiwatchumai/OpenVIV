@@ -2,7 +2,7 @@ import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 
-st.title("Beam Displacement Calculator")
+st.title("OpenBeam: Axial Load Calculator")
 
 E = st.number_input("Young's Modulus (E) [Pa]", value=200e6)
 rho = st.number_input("Density (rho) [kg/m³]", value=7800.0)
@@ -46,3 +46,7 @@ if st.button("Compute"):
     ax.set_ylabel("Displacement (m)")
     ax.grid(True)
     st.pyplot(fig)
+
+
+    # Run the program: streamlit run app.py
+
