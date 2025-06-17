@@ -35,9 +35,11 @@ if st.button("Compute"):
     F[0] = 0
 
     u = np.linalg.solve(K, F)
+    u = np.linalg.solve(K, F)
     st.write("### Nodal Displacements:")
-    for n in range(int(i)):
-        st.write(f"u{n} = {u[n]:.6f} m")
+
+    displacement_str = "      ".join([f"u{n} = {u[n]:.6f} m , " for n in range(int(i))])
+    st.write(displacement_str)
 
     fig, ax = plt.subplots()
     ax.plot(range(int(i)), u, marker='o')
