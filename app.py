@@ -10,8 +10,7 @@ matplotlib.use("Agg")  # Ensure compatibility with Streamlit
 
 st.title("OpenBeam: Axial Load Calculator")
 
-st.write("This work employs the idea of finite element analysis (FEA) to solve the axial load problem of a beam. The beam is divided into nodes, and the stiffness matrix is constructed based on the cross-sectional area and material properties. The nodal displacements are then computed based on the applied forces.")
-
+st.write("(Made by Wiwat Chumai, Mechanical Engineering Student) This work employs the idea of finite element analysis (FEA) to solve the axial load problem of a beam. The beam is divided into nodes, and the stiffness matrix is constructed based on the cross-sectional area and material properties. The nodal displacements are then computed based on the applied forces.")
 
 E = st.number_input("Young's Modulus (E) [Pa]", value=200e6)
 rho = st.number_input("Density (ρ) [kg/m³]", value=7800.0)
