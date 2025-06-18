@@ -8,6 +8,12 @@ from matplotlib.animation import FuncAnimation
 
 matplotlib.use("Agg")  # Ensure compatibility with Streamlit
 
+st.set_page_config(
+    page_title="Open-Beam",
+    page_icon="🔧",
+    layout="wide"
+)
+
 st.title("OpenBeam: Axial Load Calculator")
 
 st.write("(Made by Wiwat Chumai, Mechanical Engineering Student) This work employs the idea of finite element analysis (FEA) to solve the axial load problem of a beam. The beam is divided into nodes, and the stiffness matrix is constructed based on the cross-sectional area and material properties. The nodal displacements are then computed based on the applied forces.")
