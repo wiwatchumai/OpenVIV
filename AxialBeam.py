@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import sympy as sp
+from matplotlib.animation import FuncAnimation
 
 # Variables definittion for a beam in two-dimensional space: x-t (displacement-time)
 t=sp.symbols('t')
@@ -24,7 +25,7 @@ print(" Five common cross-sectional shapes includes " \
 "\n 4. I" \
 "\n 5. T" \
 "\n 6. C " \
-"\n 7. Square")210
+"\n 7. Square")
 cross_section_shape = input("Enter the cross-sectional shape: ")
 if cross_section_shape == 'R':
     width = float(input("Enter the width of the rectangular cross-section (m): "))
@@ -118,4 +119,29 @@ plt.title("Nodal Displacement vs Node Number")
 plt.xlabel("Node Number")
 plt.ylabel("Displacement (m)")
 plt.grid(True)
+plt.show()
+
+# Animation of beam deformation
+# Example nodal positions and displacements
+num_nodes = len(u)
+x = np.linspace(0, 1, num_nodes)  # Beam length normalized to 1
+y = np.zeros_like(x)              # Initial y positions (undeformed)
+y_disp = u                        # Displacements (from your calculation)
+
+fig, ax = plt.subplots()
+line, = ax.plot(x, y, 'o-', lw=2)
+ax.set_ylim(min(y_disp)-0.01, max(y_disp)+0.01)
+ax.set_xlim(0, 1)
+ax.set_xlabel("Beam Length (m)")
+ax.set_ylabel("Displacement (m)")
+ax.set_title("Animated Beam Nodal Displacement")
+
+def animate(frame):
+    # Interpolate between undeformed and deformed shape
+    alpha = frame / 30  # 30 frames
+    y_current = y + alpha * y_disp
+    line.set_ydata(y_current)
+    return line,
+
+ani = FuncAnimation(fig, animate, frames=31, interval=50, blit=True)
 plt.show()

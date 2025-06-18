@@ -1,10 +1,20 @@
 import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
+import tempfile
+import os
+import matplotlib
+from matplotlib.animation import FuncAnimation
+
+matplotlib.use("Agg")  # Ensure compatibility with Streamlit
 
 st.title("OpenBeam: Axial Load Calculator")
 
+st.image("C:\OpenVibration\image.png")
+
 st.write("This work employs the idea of finite element analysis (FEA) to solve the axial load problem of a beam. The beam is divided into nodes, and the stiffness matrix is constructed based on the cross-sectional area and material properties. The nodal displacements are then computed based on the applied forces.")
+
+st.image("C:\OpenVibration\clamp beam.png")
 
 E = st.number_input("Young's Modulus (E) [Pa]", value=200e6)
 rho = st.number_input("Density (ρ) [kg/m³]", value=7800.0)
@@ -21,6 +31,8 @@ st.write("5. T-Beam (T)")
 st.write("6. C-Beam (C)")
 st.write("7. Square Beam (S)")
 st.write("Each cross-sectional shape will lead to a different calculation results.")
+
+st.image("C:\OpenVibration\Beam-Diagram.png")
 
 cross_section_shape = st.selectbox(
     "Select the cross-sectional shape:",
@@ -68,6 +80,7 @@ else:
 
 k = E * A / l
 
+
 forces = []
 st.subheader("Compressive Force")
 for n in range(int(i)):
@@ -96,13 +109,45 @@ if st.button("Compute"):
     displacement_str = "    ".join([f"u{n} = {u[n]:.6f} m , " for n in range(int(i))])
     st.write(displacement_str)
 
-    fig, ax = plt.subplots()
-    ax.plot(range(int(i)), u, marker='o')
-    ax.set_title("Nodal Displacement vs Node Number")
-    ax.set_xlabel("Node Number")
-    ax.set_ylabel("Displacement (m)")
-    ax.grid(True)
-    st.pyplot(fig)
+    # Create two columns for side-by-side display
+    col1, col2 = st.columns(2)
+
+    with col1:
+        fig1, ax1 = plt.subplots()
+        ax1.plot(range(int(i)), u, marker='o')
+        ax1.set_title("Nodal Displacement vs Node Number")
+        ax1.set_xlabel("Node Number")
+        ax1.set_ylabel("Displacement (m)")
+        ax1.grid(True)
+        st.pyplot(fig1)
+
+    with col2:
+        num_nodes = len(u)
+        x = np.linspace(0, l, num_nodes)
+        y = np.zeros_like(x)
+        y_disp = u
+
+        fig2, ax2 = plt.subplots()
+        line, = ax2.plot(x, y, 'o-', lw=2)
+        ax2.set_ylim(min(y_disp)-0.01, max(y_disp)+0.01)
+        ax2.set_xlim(0, l)
+        ax2.set_xlabel("Beam Length (m)")
+        ax2.set_ylabel("Displacement (m)")
+        ax2.set_title("Animated Illustration of Beam Nodal Displacement")
+
+        def animate(frame):
+            alpha = frame / 20
+            y_current = y + alpha * y_disp
+            line.set_ydata(y_current)
+            return line,
+
+        ani = FuncAnimation(fig2, animate, frames=30, interval=50, blit=True)
+
+        tmpfile = tempfile.NamedTemporaryFile(suffix='.gif', delete=False)
+        ani.save(tmpfile.name, writer='pillow')
+        plt.close(fig2)
+
+        st.image(tmpfile.name, caption="Beam Nodal Displacement Animation")
 
 st.write("If you have any questions or need further assistance, please feel free to ask!")
 st.write("email: wiwatchumai@gmail.com")
