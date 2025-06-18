@@ -10,11 +10,11 @@ matplotlib.use("Agg")  # Ensure compatibility with Streamlit
 
 st.title("OpenBeam: Axial Load Calculator")
 
-st.image("C:\OpenVibration\image.png")
+st.image("C:\OpenVibration\Assets\image.png")
 
 st.write("This work employs the idea of finite element analysis (FEA) to solve the axial load problem of a beam. The beam is divided into nodes, and the stiffness matrix is constructed based on the cross-sectional area and material properties. The nodal displacements are then computed based on the applied forces.")
 
-st.image("C:\OpenVibration\clamp beam.png")
+st.image("C:\OpenVibration\Assets\clamp beam.png")
 
 E = st.number_input("Young's Modulus (E) [Pa]", value=200e6)
 rho = st.number_input("Density (ρ) [kg/m³]", value=7800.0)
@@ -32,7 +32,7 @@ st.write("6. C-Beam (C)")
 st.write("7. Square Beam (S)")
 st.write("Each cross-sectional shape will lead to a different calculation results.")
 
-st.image("C:\OpenVibration\Beam-Diagram.png")
+st.image("C:\OpenVibration\Assets\Beam-Diagram.png")
 
 cross_section_shape = st.selectbox(
     "Select the cross-sectional shape:",
@@ -155,4 +155,3 @@ st.write("instagram: @feuzzy_field")
 
 
     # Run the program: streamlit run app.py
-
